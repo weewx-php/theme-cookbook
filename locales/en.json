@@ -48,5 +48,12 @@
   "Invalid API address": "Invalid API address",
   "settings.language": "Language",
   "language.en": "English",
-  "language.de": "German"
+  "language.de": "German",
+  "above sea level": "above sea level",
+  "Apply": "Apply",
+  "Metric": "Metric",
+  "Metric (m/s)": "Metric (m/s)",
+  "Station default": "Station default",
+  "Units": "Units",
+  "US": "US"
 }

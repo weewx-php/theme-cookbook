@@ -36,7 +36,7 @@ const stop = subscribe(document.body.dataset.api, (feed, error) => {
             const row = document.createElement('tr');
             for (const value of [name + (point.hardware ? ' · Logger' : ''), timeFormat(zone, true)(point.start * 1000), timeFormat(zone, true)(point.end * 1000),
                 point.value === null ? '—' : new Intl.NumberFormat(document.documentElement.lang || 'en', {maximumFractionDigits: 2}).format(point.value),
-                series.unit || '', point.coverage === null ? '—' : `${Math.round(point.coverage * 100)} %`]) {
+                series.unitLabel ?? series.unit ?? '', point.coverage === null ? '—' : `${Math.round(point.coverage * 100)} %`]) {
                 const cell = document.createElement('td'); cell.textContent = value; row.append(cell);
             }
             table.append(row);

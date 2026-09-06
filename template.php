@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use WeewxPhp\Frontend\Theme;
 
-$theme ??= new Theme();
+$theme = isset($theme) && $theme instanceof Theme ? $theme : new Theme();
 
 ?><!doctype html>
 <html lang="<?= htmlspecialchars($theme->language, ENT_QUOTES, 'UTF-8') ?>">
@@ -16,8 +16,18 @@ $theme ??= new Theme();
     <script type="module" src="theme-assets.php/cookbook/cookbook.js"></script>
     <script type="module" src="theme-assets.php/cookbook/weather-widget.js"></script>
 </head>
-<body data-texts="<?= htmlspecialchars(json_encode($theme->texts, JSON_THROW_ON_ERROR), ENT_QUOTES, 'UTF-8') ?>" data-api="api/v1.php?feed=charts">
-<header><a href="./"><?= $theme->html('Weather station') ?></a><span><?= $theme->html('Theme cookbook') ?></span><a href="api/v1.php?feed=charts"><?= $theme->html('JSON API') ?></a></header>
+<body data-texts="<?= htmlspecialchars(json_encode($theme->texts, JSON_THROW_ON_ERROR), ENT_QUOTES, 'UTF-8') ?>" data-api="api/v1.php?feed=charts&amp;units=<?= $theme->units->profile ?>">
+<header><a href="./"><?= $theme->html('Weather station') ?></a><span><?= $theme->html('Theme cookbook') ?></span><a href="api/v1.php?feed=charts&amp;units=<?= $theme->units->profile ?>"><?= $theme->html('JSON API') ?></a>
+    <form class="unit-selector" method="get">
+        <label for="units"><?= $theme->html('Units') ?></label>
+        <select id="units" name="units">
+            <?php foreach ($theme->unitOptions() as $id => $label): ?>
+            <option value="<?= htmlspecialchars($id, ENT_QUOTES, 'UTF-8') ?>"<?= $id === $theme->units->selection ? ' selected' : '' ?>><?= htmlspecialchars($label, ENT_QUOTES, 'UTF-8') ?></option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit"><?= $theme->html('Apply') ?></button>
+    </form>
+</header>
 <main>
     <h1><?= $theme->html('Weather data with Apache ECharts') ?></h1>
     <p id="chart-status" role="status"><?= $theme->html('Loading …') ?></p>
@@ -28,8 +38,8 @@ $theme ??= new Theme();
         <section><h2><?= $theme->html('Month compared with previous years') ?></h2><p data-status="rainComparison"></p><div data-chart="comparison" class="chart" role="img" aria-label="<?= $theme->html('Monthly rainfall in previous years up to the same calendar time') ?>"></div></section>
     </div>
     <section class="embed"><h2><?= $theme->html('Sidebar widgets') ?></h2><div class="widgets">
-        <weewx-weather api="api/v1.php?feed=sidebar" title="<?= $theme->html('Last archive reading') ?>"></weewx-weather>
-        <weewx-weather api="api/v1.php?feed=live" title="Live"></weewx-weather>
+        <weewx-weather api="api/v1.php?feed=sidebar&amp;units=<?= $theme->units->profile ?>" title="<?= $theme->html('Last archive reading') ?>"></weewx-weather>
+        <weewx-weather api="api/v1.php?feed=live&amp;units=<?= $theme->units->profile ?>" title="Live"></weewx-weather>
     </div></section>
     <details><summary><?= $theme->html('Chart data table') ?></summary><div class="table-scroll"><table id="chart-table"><thead><tr><th><?= $theme->html('Series') ?></th><th><?= $theme->html('Start') ?></th><th><?= $theme->html('End') ?></th><th><?= $theme->html('Value') ?></th><th><?= $theme->html('Unit') ?></th><th><?= $theme->html('Coverage') ?></th></tr></thead><tbody></tbody></table></div></details>
     <noscript><?= $theme->html('JavaScript is required for charts and widgets.') ?></noscript>

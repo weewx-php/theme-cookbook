@@ -3,17 +3,17 @@
 declare(strict_types=1);
 
 use WeewxPhp\Frontend\Output;
+use WeewxPhp\Frontend\Theme;
 use WeewxPhp\Frontend\Weather;
 
 if (!isset($wx) || !$wx instanceof Weather) {
     throw new LogicException('A Weather context is required');
 }
-$wx = $wx->output(new Output(
-    'en',
-    units: ['group_temperature' => 'degree_C',
-        'group_rain' => 'mm', 'group_speed' => 'km_per_hour', 'group_pressure' => 'mbar'],
+$theme = isset($theme) && $theme instanceof Theme ? $theme : new Theme();
+$wx = $wx->output($theme->output(new Output(
+    $theme->language === 'de' ? 'de' : 'en',
     decimals: ['group_percent' => 0],
-))->reference('archive');
+)))->reference('archive');
 
 return [
     'temperature' => $wx->current('outTemp'),

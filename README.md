@@ -39,6 +39,16 @@ Large initial datasets may need multiple worker runs. Live values require LOOP
 input; historical comparisons require sufficiently complete previous years.
 The full PHP/API guide is in the core at `docs/theme-cookbook.md`.
 
+## Select display units
+
+The **Units → Apply** control demonstrates the core's visitor preference.
+`template.php` passes the effective profile to charts and widgets through the
+feed URL. `assets/chart-recipes.js` uses `unitLabel` and `decimals` from each
+result for axis names and tooltips. No browser conversion is needed. This version
+requires core `UnitPreferences`, `Theme::output()` and JSON feed `units` support.
+The integration example and reference are in the core at
+`docs/theme-cookbook.md#visitor-unit-selection` and `docs/display-units.md`.
+
 ## Tests
 
 Use Docker for all checks. Start Docker if it is not running. Run the template
@@ -49,3 +59,9 @@ WEEWX_PHP_ROOT=/path/to/weewx-php docker compose -f tests/docker/compose.yml run
 ```
 
 For PowerShell, set `$env:WEEWX_PHP_ROOT` before invoking Docker Compose.
+
+Run the chart metadata regression test from the theme directory:
+
+```sh
+docker run --rm --network none -v "$PWD:/theme:ro" -w /theme node:22-alpine node --test tests/chart-units.test.mjs
+```

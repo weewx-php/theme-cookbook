@@ -1,7 +1,13 @@
-# Security review: cookbook 0.1.0
+# Security review: cookbook 0.1.1
 
 Reviewed on 2026-09-06 for theme API 1. Scope: all package PHP entry points,
 templates, browser scripts, settings and locale resources.
+
+The 0.1.1 update uses validated core profile IDs in feed URLs. HTML labels are
+escaped, and ECharts tooltips use rich-text rendering. Docker checks cover
+translated selection controls, numeric chart data, missing readings and unit
+metadata. PHPStan passed for the package runtime. No dependencies changed since
+the 0.1.0 audit below.
 
 | Area | Result |
 | --- | --- |

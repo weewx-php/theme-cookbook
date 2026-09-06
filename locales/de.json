@@ -48,5 +48,12 @@
   "Invalid API address": "Ungültige API-Adresse",
   "settings.language": "Sprache",
   "language.en": "Englisch",
-  "language.de": "Deutsch"
+  "language.de": "Deutsch",
+  "above sea level": "über dem Meeresspiegel",
+  "Apply": "Anwenden",
+  "Metric": "Metrisch",
+  "Metric (m/s)": "Metrisch (m/s)",
+  "Station default": "Stationsstandard",
+  "Units": "Einheiten",
+  "US": "US"
 }
