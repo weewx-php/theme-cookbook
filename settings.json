@@ -1,0 +1,16 @@
+{
+  "theme": "cookbook",
+  "schema_version": 1,
+  "fields": [
+    {
+      "key": "language",
+      "type": "select",
+      "label": "settings.language",
+      "default": "en",
+      "options": {
+        "en": "language.en",
+        "de": "language.de"
+      }
+    }
+  ]
+}
